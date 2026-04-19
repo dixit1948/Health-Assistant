@@ -1,0 +1,156 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-text-primary antialiased selection:bg-brand-primary/30 selection:text-white font-sans;
+  }
+
+  /* --- CLINICAL PRINT ARCHITECTURE (INVOICE STYLE) --- */
+  @media print {
+    @page {
+      margin: 1.5cm;
+      size: auto;
+    }
+    
+    body {
+      background: white !important;
+      color: black !important;
+    }
+    
+    /* Hide ALL non-prescription elements */
+    header, nav, aside, footer, .sidebar, .chat-controls, .input-area, .system-logs, button:not(.print-keep) {
+      display: none !important;
+    }
+
+    #root {
+      background: white !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    .card-obsidian {
+      display: block !important;
+      background: white !important;
+      color: black !important;
+      border: 2px solid #000 !important;
+      box-shadow: none !important;
+      width: 100% !important;
+      visibility: visible !important;
+      position: static !important;
+      padding: 20px !important;
+      border-radius: 0 !important;
+    }
+
+    .card-obsidian * {
+      color: black !important;
+      visibility: visible !important;
+    }
+
+    /* Medical Invoice Header */
+    .bg-gradient-to-r {
+      background: #eee !important;
+      color: black !important;
+      border-bottom: 2px solid #000 !important;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .bg-gradient-to-r h3, .bg-gradient-to-r p {
+      color: black !important;
+    }
+
+    /* Table borders like a real invoice */
+    table {
+      width: 100% !important;
+      border: 1px solid #000 !important;
+      border-collapse: collapse !important;
+      margin-top: 20px !important;
+    }
+
+    th {
+      background: #f0f0f0 !important;
+      border: 1px solid #000 !important;
+      font-weight: bold !important;
+      -webkit-print-color-adjust: exact;
+    }
+
+    td {
+      border: 1px solid #000 !important;
+      padding: 10px !important;
+    }
+
+    /* Grid to Stacked for Print */
+    .grid {
+      display: block !important;
+    }
+
+    .group {
+      border: 1px solid #eee !important;
+      margin-bottom: 15px !important;
+      padding: 15px !important;
+      page-break-inside: avoid;
+    }
+
+    .text-brand-primary, .text-brand-secondary, .text-brand-emerald {
+      color: black !important;
+      font-weight: bold !important;
+    }
+
+    /* Remove interactive labels */
+    .bg-brand-emerald\/10, .bg-brand-amber\/10, .bg-brand-red\/10 {
+      border: 1px solid #000 !important;
+      color: black !important;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface-highest rounded-full hover:bg-brand-primary/30 transition-colors;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-glow-primary;
+  }
+
+  .card-obsidian {
+    @apply bg-surface rounded-[2rem] border border-white/5 overflow-hidden transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply bg-brand-gradient text-white px-6 py-3 rounded-2xl font-bold shadow-glow-primary active:scale-95 transition-all hover:brightness-110;
+  }
+
+  .btn-ghost {
+    @apply bg-white/5 hover:bg-white/10 text-white/70 hover:text-white px-6 py-3 rounded-2xl font-bold transition-all border border-white/5;
+  }
+
+  .input-obsidian {
+    @apply w-full bg-surface-low border border-white/10 rounded-2xl p-4 text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:bg-surface-high transition-all;
+  }
+
+  .status-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider;
+  }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.3); opacity: 1; }
+  80%, 100% { opacity: 0; }
+}
+
+.pulse-primary {
+  @apply relative;
+}
+.pulse-primary::after {
+  content: "";
+  @apply absolute inset-0 rounded-full bg-brand-primary ring-4 ring-brand-primary/20 animate-ping;
+}
